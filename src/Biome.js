@@ -1,4 +1,4 @@
-import animal_log from "./AnimalLog";
+import animal_log from "./AnimalLog.js";
 
 export default class Biome {
   constructor(number, enviroments, maximum_capacity, animals_inside) {

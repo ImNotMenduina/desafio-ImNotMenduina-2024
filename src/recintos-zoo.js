@@ -3,34 +3,32 @@ import animal_log from "./AnimalLog.js";
 import { push_to_array, available_biomes } from "./AnimalLog.js";
 
 class RecintosZoo {
+  constructor() {
+    //instancia dos biomas, de acordo com o problema proposto
+    this.biomes = [
+      new Biome(1, ["SAVANA"], 10, [{ name: "MACACO", qtd: 3 }]),
+      new Biome(2, ["FLORESTA"], 5, []),
+      new Biome(3, ["SAVANA", "RIO"], 7, [{ name: "GAZELA", qtd: 1 }]),
+      new Biome(4, ["RIO"], 8, []),
+      new Biome(5, ["SAVANA"], 9, [{ name: "LEAO", qtd: 1 }]),
+    ];
+  }
   analisaRecintos(animal, quantidade) {
     let resultado = {};
+    let required_capacity; // capacidade necessária no bioma para alocar uma espécie
+    let possibilities = []; // biomas possíveis
 
     if (quantidade <= 0) {
       resultado.erro = "Quantidade inválida";
       return resultado;
     }
 
-    //instancia dos biomas, de acordo com o problema proposto
-    let biomes = [];
-
-    biomes.push(new Biome(1, ["SAVANA"], 10, [{ name: "MACACO", qtd: 3 }]));
-    biomes.push(new Biome(2, ["FLORESTA"], 5, []));
-    biomes.push(
-      new Biome(3, ["SAVANA", "RIO"], 7, [{ name: "GAZELA", qtd: 1 }])
-    );
-    biomes.push(new Biome(4, ["RIO"], 8, []));
-    biomes.push(new Biome(5, ["SAVANA"], 9, [{ name: "LEAO", qtd: 1 }]));
-
-    let required_capacity; // capacidade necessária no bioma para alocar uma espécie
-    let possibilities = []; // biomas possíveis
-
     switch (animal) {
       case "HIPOPOTAMO":
         required_capacity = animal_log[animal].size * quantidade;
         // filtra os biomas de acordo com as preferências
         // p1 ( Hipopótamo(s) só tolera(m) outras espécies estando num recinto com savana e rio )
-        possibilities = biomes.filter(
+        possibilities = this.biomes.filter(
           (biome) =>
             biome.animal_likes_biome(animal_log[animal].biome) ===
               animal_log[animal].biome.length &&
@@ -50,7 +48,7 @@ class RecintosZoo {
         // filtra os biomas de acordo com as preferências
         // p1 ( Um macaco não se sente confortável sem outro animal no recinto ) -- deve haver alguma espécie no bioma
         // p2 ( seja da mesma ou outra espécie )
-        possibilities = biomes.filter(
+        possibilities = this.biomes.filter(
           (biome) =>
             biome.animal_likes_biome(animal_log[animal].biome) &&
             // o bioma não está em sua capacidade máxima
@@ -73,7 +71,7 @@ class RecintosZoo {
       case "CROCODILO":
       case "GAZELA":
         required_capacity = animal_log[animal].size * quantidade;
-        possibilities = biomes.filter(
+        possibilities = this.biomes.filter(
           (biome) =>
             biome.animal_likes_biome(animal_log[animal].biome) &&
             biome.add_animals(required_capacity, animal)
