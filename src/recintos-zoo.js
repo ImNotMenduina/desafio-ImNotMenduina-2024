@@ -1,6 +1,10 @@
 import Biome from "./Biome.js";
 import animal_log from "./AnimalLog.js";
-import { push_to_array, available_biomes } from "./AnimalLog.js";
+import {
+  push_to_array,
+  available_biomes,
+  calculate_required_capacity,
+} from "./AnimalLog.js";
 
 class RecintosZoo {
   constructor() {
@@ -25,7 +29,7 @@ class RecintosZoo {
 
     switch (animal) {
       case "HIPOPOTAMO":
-        required_capacity = animal_log[animal].size * quantidade;
+        required_capacity = calculate_required_capacity(animal, quantidade);
         // filtra os biomas de acordo com as preferências
         // p1 ( Hipopótamo(s) só tolera(m) outras espécies estando num recinto com savana e rio )
         possibilities = this.biomes.filter(
@@ -44,7 +48,7 @@ class RecintosZoo {
         break;
 
       case "MACACO":
-        required_capacity = animal_log[animal].size * quantidade;
+        required_capacity = calculate_required_capacity(animal, quantidade);
         // filtra os biomas de acordo com as preferências
         // p1 ( Um macaco não se sente confortável sem outro animal no recinto ) -- deve haver alguma espécie no bioma
         // p2 ( seja da mesma ou outra espécie )
@@ -70,7 +74,7 @@ class RecintosZoo {
       case "LEOPARDO":
       case "CROCODILO":
       case "GAZELA":
-        required_capacity = animal_log[animal].size * quantidade;
+        required_capacity = calculate_required_capacity(animal, quantidade);
         possibilities = this.biomes.filter(
           (biome) =>
             biome.animal_likes_biome(animal_log[animal].biome) &&

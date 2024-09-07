@@ -19,4 +19,8 @@ export function available_biomes(recintosViaveis) {
   return recintosViaveis.length > 0;
 }
 
+export function calculate_required_capacity(animal, quantidade) {
+  return animal_log[animal].size * quantidade;
+}
+
 export default animal_log;
