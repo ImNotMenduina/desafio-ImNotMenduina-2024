@@ -43,7 +43,7 @@ export default class Biome {
     return `Recinto ${this.number} (espaço livre: ${this.current_capacity} total: ${this.maximum_capacity})`;
   }
   // retorna quantos biomas são compatíveis com a preferência da espécia
-  animal_likes_bioma(animal_biomes) {
+  animal_likes_biome(animal_biomes) {
     let count = 0;
     for (let i = 0; i < animal_biomes.length; i++) {
       for (let j = 0; j < this.enviroments.length; j++) {
