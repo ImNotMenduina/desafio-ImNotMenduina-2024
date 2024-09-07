@@ -64,7 +64,8 @@ export default class Biome {
     if (animal_log[name].carnivore && !this.carnivore_animals) return false;
     // caso hajam espécies ao adicionar a nova espécie ao bioma (espaço_necessário + 1)
     if (!this.is_species_inside(name) && this.animals_inside.length >= 1) {
-      if (this.current_capacity - required_capacity + 1 >= 0) {
+      let required_capacity_plus_one = required_capacity + 1;
+      if (this.current_capacity - required_capacity_plus_one >= 0) {
         this.current_capacity -= required_capacity + 1;
         return true;
       }
