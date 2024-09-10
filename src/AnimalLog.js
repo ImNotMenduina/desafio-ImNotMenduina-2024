@@ -67,8 +67,10 @@ export function hipopotamo_available_biomes(biomes, animal, quantidade) {
 
   possibilities_2 = biomes.filter(
     (biome) =>
+      // caso bioma "SAVANA E RIO", hipopótamo tolera outras espécies
       (biome.animal_likes_biome(animal_log[animal].biome) ==
         animal_log[animal].biome.length) &&
+      // adiciona espécie ao bioma, se possível
       biome.add_animals(required_capacity, animal)
   );
 
@@ -78,16 +80,18 @@ export function hipopotamo_available_biomes(biomes, animal, quantidade) {
   return resultado;
 }
 
+// retorna os detalhes do bioma caso existam
 function biomes_validation_obj(possibilities) {
   let resultado = {};
   if (available_biomes(possibilities)) {
-    
+    // garante ordenação dos biomas
     possibilities.sort(function(a, b) {
       if (a.get_number() > b.get_number())
         return 1
       return -1
     })
 
+    // push no array dos detalhes do bioma
     resultado.recintosViaveis = push_to_array(possibilities);
   }
   else {
@@ -95,6 +99,7 @@ function biomes_validation_obj(possibilities) {
   }
   return resultado;
 }
+
 // retorna o detalhes de cada bioma caso a espécie seja inserida
 export function push_to_array(possibilities) {
   let recintos = [];
@@ -103,15 +108,18 @@ export function push_to_array(possibilities) {
   });
   return recintos;
 }
+
 // retorna true caso hajam biomas disponíveis para a espécie
 export function available_biomes(recintosViaveis) {
   return recintosViaveis.length > 0;
 }
 
+// calculo da capacidade necessária para alocar o animal/grupo
 export function calculate_required_capacity(animal, quantidade) {
   return animal_log[animal].size * quantidade;
 }
 
+// validação da quantidade informada
 export function quantity_validation(quantidade) {
   if (quantidade <= 0) return true;
   return false;
