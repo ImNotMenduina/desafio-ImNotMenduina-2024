@@ -6,6 +6,72 @@ const animal_log = {
   GAZELA: { size: 2, carnivore: false, biome: ["SAVANA"] },
   HIPOPOTAMO: { size: 4, carnivore: false, biome: ["SAVANA", "RIO"] },
 };
+
+export function animals_available_biomes(biomes, animal, quantidade) {
+  let possibilities = [];
+  let resultado = {};
+  let required_capacity = calculate_required_capacity(animal, quantidade);
+
+  // biomas possíveis ao restante dos animais (LEAO, LEOPARDO, CROCODILO, GAZELA)
+  possibilities = biomes.filter(
+    (biome) =>
+      biome.animal_likes_biome(animal_log[animal].biome) &&
+      biome.add_animals(required_capacity, animal)
+  );
+
+  resultado = biomes_validation_obj(possibilities);
+  return resultado;
+}
+
+export function macaco_available_biomes(biomes, animal, quantidade) {
+  let possibilities = [];
+  let resultado = {};
+  let required_capacity = calculate_required_capacity(animal, quantidade);
+
+  // biomas possíveis para macacos
+  possibilities = biomes.filter(
+    (biome) =>
+      // macaco gosta do bioma
+      biome.animal_likes_biome(animal_log[animal].biome) &&
+      // o bioma não está vazio || macacos juntos entram no bioma
+      (biome.get_current_capacity() < biome.get_maximum_capacity() ||
+        quantidade > 1) &&
+      // tenta adicionar macaco(s) ao bioma
+      biome.add_animals(required_capacity, animal)
+  );
+
+  resultado = biomes_validation_obj(possibilities);
+  return resultado;
+}
+
+export function hipopotamo_available_biomes(biomes, animal, quantidade) {
+  let possibilities = [];
+  let resultado = {};
+  let required_capacity = calculate_required_capacity(animal, quantidade);
+
+  // biomas possíveis para macacos
+  possibilities = biomes.filter(
+    (biome) =>
+      // hipopotamo gosta do bioma
+      biome.animal_likes_biome(animal_log[animal].biome) ===
+        animal_log[animal].biome.length &&
+      biome.add_animals(required_capacity, animal)
+  );
+
+  resultado = biomes_validation_obj(possibilities);
+  return resultado;
+}
+
+function biomes_validation_obj(possibilities) {
+  let resultado = {};
+  if (available_biomes(possibilities)) {
+    resultado.recintosViaveis = push_to_array(possibilities);
+  }
+  else {
+    resultado.erro = "Não há recinto viável";
+  }
+  return resultado;
+}
 // retorna o detalhes de cada bioma caso a espécie seja inserida
 export function push_to_array(possibilities) {
   let recintos = [];
@@ -21,6 +87,11 @@ export function available_biomes(recintosViaveis) {
 
 export function calculate_required_capacity(animal, quantidade) {
   return animal_log[animal].size * quantidade;
+}
+
+export function quantity_validation(quantidade) {
+  if (quantidade <= 0) return true;
+  return false;
 }
 
 export default animal_log;
