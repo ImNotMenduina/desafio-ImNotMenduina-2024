@@ -23,6 +23,10 @@ export default class Biome {
       });
     }
   }
+  // retorna o id do bioma
+  get_number() {
+    return this.number;
+  }
   // retorna a capacidade máxima
   get_maximum_capacity() {
     return this.maximum_capacity;

@@ -36,6 +36,7 @@ class RecintosZoo {
       case "MACACO":
         // retorna detalhes sobre os biomas disponíveis para macacos
         resultado = macaco_available_biomes(this.biomes, animal, quantidade);
+
         break;
 
       case "LEAO":
@@ -44,7 +45,7 @@ class RecintosZoo {
       case "GAZELA":
         // retorna detalhes sobre os biomas disponíveis para outros animais
         resultado = animals_available_biomes(this.biomes, animal, quantidade);
-  
+
         break;
 
       default:
@@ -55,4 +56,5 @@ class RecintosZoo {
     return resultado;
   }
 }
+
 export { RecintosZoo as RecintosZoo };
