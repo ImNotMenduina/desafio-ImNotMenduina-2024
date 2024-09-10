@@ -31,6 +31,14 @@ export default class Biome {
   get_current_capacity() {
     return this.current_capacity;
   }
+  // retorna se o bioma está vazio ou não
+  is_empty() {
+    return this.maximum_capacity == this.current_capacity;
+  }
+  // retorna quantidade de animais/espécies dentro do bioma
+  get_species_inside_length() {
+    return this.animals_inside.length;
+  }
   // verifica se uma determinada espécie já está no bioma
   is_species_inside(specie) {
     for (let i = 0; i < this.animals_inside.length; i++) {
@@ -47,7 +55,7 @@ export default class Biome {
     let count = 0;
     for (let i = 0; i < animal_biomes.length; i++) {
       for (let j = 0; j < this.enviroments.length; j++) {
-        if (animal_biomes[i] == this.enviroments[j]) count++;
+        if (animal_biomes[i] === this.enviroments[j]) count++;
       }
     }
     return count;

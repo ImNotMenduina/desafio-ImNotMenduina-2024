@@ -16,6 +16,7 @@ export function animals_available_biomes(biomes, animal, quantidade) {
   possibilities = biomes.filter(
     (biome) =>
       biome.animal_likes_biome(animal_log[animal].biome) &&
+      // adiciona espécie ao bioma, se possível
       biome.add_animals(required_capacity, animal)
   );
 
@@ -36,7 +37,7 @@ export function macaco_available_biomes(biomes, animal, quantidade) {
       // o bioma não está vazio || macacos juntos entram no bioma
       (biome.get_current_capacity() < biome.get_maximum_capacity() ||
         quantidade > 1) &&
-      // tenta adicionar macaco(s) ao bioma
+      // adiciona espécie ao bioma, se possível
       biome.add_animals(required_capacity, animal)
   );
 
@@ -45,18 +46,33 @@ export function macaco_available_biomes(biomes, animal, quantidade) {
 }
 
 export function hipopotamo_available_biomes(biomes, animal, quantidade) {
+  let possibilities_1 = [];
+  let possibilities_2 = [];
   let possibilities = [];
   let resultado = {};
   let required_capacity = calculate_required_capacity(animal, quantidade);
 
-  // biomas possíveis para macacos
-  possibilities = biomes.filter(
+  // biomas possíveis para hipopótamos
+  possibilities_1 = biomes.filter(
     (biome) =>
-      // hipopotamo gosta do bioma
-      biome.animal_likes_biome(animal_log[animal].biome) ===
+      biome.animal_likes_biome(animal_log[animal].biome) &&
+      // caso bioma esteja vazio
+      (biome.is_empty() ||
+        // ou tenha apenas hipopótamos
+        (biome.is_species_inside("HIPOPOTAMO") &&
+          biome.get_species_inside_length() == 1)) &&
+      // adiciona espécie ao bioma, se possível
+      biome.add_animals(required_capacity, animal)
+  );
+
+  possibilities_2 = biomes.filter(
+    (biome) =>
+      biome.animal_likes_biome(animal_log[animal].biome) ==
         animal_log[animal].biome.length &&
       biome.add_animals(required_capacity, animal)
   );
+
+  possibilities = [...possibilities_1, ...possibilities_2];
 
   resultado = biomes_validation_obj(possibilities);
   return resultado;

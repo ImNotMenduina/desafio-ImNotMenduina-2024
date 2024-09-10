@@ -55,5 +55,4 @@ class RecintosZoo {
     return resultado;
   }
 }
-
 export { RecintosZoo as RecintosZoo };
