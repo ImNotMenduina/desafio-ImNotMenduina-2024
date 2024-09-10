@@ -67,8 +67,8 @@ export function hipopotamo_available_biomes(biomes, animal, quantidade) {
 
   possibilities_2 = biomes.filter(
     (biome) =>
-      biome.animal_likes_biome(animal_log[animal].biome) ==
-        animal_log[animal].biome.length &&
+      (biome.animal_likes_biome(animal_log[animal].biome) ==
+        animal_log[animal].biome.length) &&
       biome.add_animals(required_capacity, animal)
   );
 
@@ -81,6 +81,13 @@ export function hipopotamo_available_biomes(biomes, animal, quantidade) {
 function biomes_validation_obj(possibilities) {
   let resultado = {};
   if (available_biomes(possibilities)) {
+    
+    possibilities.sort(function(a, b) {
+      if (a.get_number() > b.get_number())
+        return 1
+      return -1
+    })
+
     resultado.recintosViaveis = push_to_array(possibilities);
   }
   else {
