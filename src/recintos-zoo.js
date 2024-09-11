@@ -1,9 +1,8 @@
 import Biome from "./Biome.js";
-import animal_log from "./AnimalLog.js";
 import Animal from "./Animal.js";
 import {
   quantity_validation,
-} from "./AnimalLog.js";
+} from "./Tools.js";
 
 class RecintosZoo {
   constructor() {

@@ -1,7 +1,5 @@
-import animal_log, {
-  calculate_required_capacity,
-  biomes_validation_obj,
-} from "./AnimalLog.js";
+import { calculate_required_capacity, biomes_validation_obj } from "./Tools.js";
+import animal_log from "./AnimalLog";
 
 export default class Animal {
   static animal_likes_biome(animal_biomes, biome) {
