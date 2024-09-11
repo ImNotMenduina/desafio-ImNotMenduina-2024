@@ -1,8 +1,6 @@
 import Biome from "./Biome.js";
 import Animal from "./Animal.js";
-import {
-  quantity_validation,
-} from "./Tools.js";
+import { is_number, quantity_validation } from "./Tools.js";
 
 class RecintosZoo {
   constructor() {
@@ -18,7 +16,8 @@ class RecintosZoo {
   analisaRecintos(animal, quantidade) {
     let resultado = {};
 
-    if (quantity_validation(quantidade)) {
+    // valida o valor da variável quantidade se é inteiro, natural e maior que zero
+    if (!is_number(quantidade) || quantity_validation(quantidade)) {
       resultado.erro = "Quantidade inválida";
       return resultado;
     }
@@ -26,13 +25,21 @@ class RecintosZoo {
     switch (animal) {
       case "HIPOPOTAMO":
         // retorna detalhes sobre os biomas disponíveis hipopótamos
-        resultado = Animal.hipopotamo_available_biomes(this.biomes, animal, quantidade);
+        resultado = Animal.hipopotamo_available_biomes(
+          this.biomes,
+          animal,
+          quantidade
+        );
 
         break;
 
       case "MACACO":
         // retorna detalhes sobre os biomas disponíveis para macacos
-        resultado = Animal.macaco_available_biomes(this.biomes, animal, quantidade);
+        resultado = Animal.macaco_available_biomes(
+          this.biomes,
+          animal,
+          quantidade
+        );
 
         break;
 
@@ -41,7 +48,11 @@ class RecintosZoo {
       case "CROCODILO":
       case "GAZELA":
         // retorna detalhes sobre os biomas disponíveis para outros animais
-        resultado = Animal.animals_available_biomes(this.biomes, animal, quantidade);
+        resultado = Animal.animals_available_biomes(
+          this.biomes,
+          animal,
+          quantidade
+        );
 
         break;
 

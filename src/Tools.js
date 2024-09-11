@@ -42,3 +42,8 @@ export function quantity_validation(quantidade) {
   if (quantidade <= 0) return true;
   return false;
 }
+
+// verifica se o valor é um número inteiro
+export function is_number(quantidade) {
+    return Number.isInteger(quantidade);
+}

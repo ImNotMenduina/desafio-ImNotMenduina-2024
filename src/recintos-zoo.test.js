@@ -71,5 +71,11 @@ describe('Recintos do Zoologico', () => {
         expect(resultado.recintosViaveis[1]).toBe('Recinto 4 (espaço livre: 4 total: 8)');
         expect(resultado.recintosViaveis.length).toBe(2)
     })
+
+    test('Deve rejeitar quantidade inválida para valores não numéricos', () => {
+        const resultado = new RecintosZoo().analisaRecintos('MACACO', "15")
+        expect(resultado.erro).toBe("Quantidade inválida");
+        expect(resultado.recintosViaveis).toBeFalsy();
+    })
 });
 
