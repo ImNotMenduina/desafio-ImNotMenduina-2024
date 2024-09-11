@@ -1,9 +1,7 @@
 import Biome from "./Biome.js";
 import animal_log from "./AnimalLog.js";
+import Animal from "./Animal.js";
 import {
-  hipopotamo_available_biomes,
-  animals_available_biomes,
-  macaco_available_biomes,
   quantity_validation,
 } from "./AnimalLog.js";
 
@@ -29,13 +27,13 @@ class RecintosZoo {
     switch (animal) {
       case "HIPOPOTAMO":
         // retorna detalhes sobre os biomas disponíveis hipopótamos
-        resultado = hipopotamo_available_biomes(this.biomes, animal, quantidade);
+        resultado = Animal.hipopotamo_available_biomes(this.biomes, animal, quantidade);
 
         break;
 
       case "MACACO":
         // retorna detalhes sobre os biomas disponíveis para macacos
-        resultado = macaco_available_biomes(this.biomes, animal, quantidade);
+        resultado = Animal.macaco_available_biomes(this.biomes, animal, quantidade);
 
         break;
 
@@ -44,7 +42,7 @@ class RecintosZoo {
       case "CROCODILO":
       case "GAZELA":
         // retorna detalhes sobre os biomas disponíveis para outros animais
-        resultado = animals_available_biomes(this.biomes, animal, quantidade);
+        resultado = Animal.animals_available_biomes(this.biomes, animal, quantidade);
 
         break;
 

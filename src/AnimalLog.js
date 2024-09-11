@@ -1,3 +1,5 @@
+import Animal from "./Animal.js";
+
 const animal_log = {
   LEAO: { size: 3, carnivore: true, biome: ["SAVANA"] },
   LEOPARDO: { size: 2, carnivore: true, biome: ["SAVANA"] },
@@ -7,94 +9,19 @@ const animal_log = {
   HIPOPOTAMO: { size: 4, carnivore: false, biome: ["SAVANA", "RIO"] },
 };
 
-export function animals_available_biomes(biomes, animal, quantidade) {
-  let possibilities = [];
-  let resultado = {};
-  let required_capacity = calculate_required_capacity(animal, quantidade);
-
-  // biomas possíveis ao restante dos animais (LEAO, LEOPARDO, CROCODILO, GAZELA)
-  possibilities = biomes.filter(
-    (biome) =>
-      biome.animal_likes_biome(animal_log[animal].biome) &&
-      // adiciona espécie ao bioma, se possível
-      biome.add_animals(required_capacity, animal)
-  );
-
-  resultado = biomes_validation_obj(possibilities);
-  return resultado;
-}
-
-export function macaco_available_biomes(biomes, animal, quantidade) {
-  let possibilities = [];
-  let resultado = {};
-  let required_capacity = calculate_required_capacity(animal, quantidade);
-
-  // biomas possíveis para macacos
-  possibilities = biomes.filter(
-    (biome) =>
-      // macaco gosta do bioma
-      biome.animal_likes_biome(animal_log[animal].biome) &&
-      // o bioma não está vazio || macacos juntos entram no bioma
-      (biome.get_current_capacity() < biome.get_maximum_capacity() ||
-        quantidade > 1) &&
-      // adiciona espécie ao bioma, se possível
-      biome.add_animals(required_capacity, animal)
-  );
-
-  resultado = biomes_validation_obj(possibilities);
-  return resultado;
-}
-
-export function hipopotamo_available_biomes(biomes, animal, quantidade) {
-  let possibilities_1 = [];
-  let possibilities_2 = [];
-  let possibilities = [];
-  let resultado = {};
-  let required_capacity = calculate_required_capacity(animal, quantidade);
-
-  // biomas possíveis para hipopótamos
-  possibilities_1 = biomes.filter(
-    (biome) =>
-      biome.animal_likes_biome(animal_log[animal].biome) &&
-      // caso bioma esteja vazio
-      (biome.is_empty() ||
-        // ou tenha apenas hipopótamos
-        (biome.is_species_inside("HIPOPOTAMO") &&
-          biome.get_species_inside_length() == 1)) &&
-      // adiciona espécie ao bioma, se possível
-      biome.add_animals(required_capacity, animal)
-  );
-
-  possibilities_2 = biomes.filter(
-    (biome) =>
-      // caso bioma "SAVANA E RIO", hipopótamo tolera outras espécies
-      (biome.animal_likes_biome(animal_log[animal].biome) ==
-        animal_log[animal].biome.length) &&
-      // adiciona espécie ao bioma, se possível
-      biome.add_animals(required_capacity, animal)
-  );
-
-  possibilities = [...possibilities_1, ...possibilities_2];
-
-  resultado = biomes_validation_obj(possibilities);
-  return resultado;
-}
-
 // retorna os detalhes do bioma caso existam
-function biomes_validation_obj(possibilities) {
+export function biomes_validation_obj(possibilities) {
   let resultado = {};
   if (available_biomes(possibilities)) {
     // garante ordenação dos biomas
-    possibilities.sort(function(a, b) {
-      if (a.get_number() > b.get_number())
-        return 1
-      return -1
-    })
+    possibilities.sort(function (a, b) {
+      if (a.get_number() > b.get_number()) return 1;
+      return -1;
+    });
 
     // push no array dos detalhes do bioma
     resultado.recintosViaveis = push_to_array(possibilities);
-  }
-  else {
+  } else {
     resultado.erro = "Não há recinto viável";
   }
   return resultado;

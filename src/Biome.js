@@ -35,6 +35,10 @@ export default class Biome {
   get_current_capacity() {
     return this.current_capacity;
   }
+  // retorna os ambientes dentro do bioma
+  get_biomes_inside() {
+    return this.enviroments;
+  }
   // retorna se o bioma está vazio ou não
   is_empty() {
     return this.maximum_capacity == this.current_capacity;
@@ -53,16 +57,6 @@ export default class Biome {
   // retorna detalhes sobre a capacidade que restaria ao inserir o animal
   biome_details() {
     return `Recinto ${this.number} (espaço livre: ${this.current_capacity} total: ${this.maximum_capacity})`;
-  }
-  // retorna quantos biomas são compatíveis com a preferência da espécia
-  animal_likes_biome(animal_biomes) {
-    let count = 0;
-    for (let i = 0; i < animal_biomes.length; i++) {
-      for (let j = 0; j < this.enviroments.length; j++) {
-        if (animal_biomes[i] === this.enviroments[j]) count++;
-      }
-    }
-    return count;
   }
   // retorna true caso a adição da ( espécia * quantidade ) ocorreu com sucesso
   add_animals(required_capacity, name) {
